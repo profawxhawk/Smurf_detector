@@ -1,0 +1,91 @@
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="/static/jsencrypt.min.js"></script>
+        {% block head %}
+        <title >Welcome to the homepage</title>
+        {% endblock %}
+    </head>
+    <body>
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12" style="background-color: #25D366; text-align:center;">
+			<h2>
+				Smurfinator
+			</h2>
+		</div>
+	</div>
+<br><br><br><br><br>
+	<div class="row">
+		<div class="col-md-12 form-group" style="text-align:center;">
+                <label for="sel1"><h2>Select Website</h2></label>
+                <select class="form-control" id="sel1" style="width: 350px; margin-left:10px; display: inline-block;">
+                    <option>Rainbow6 Siege</option>
+                    <option>Codeforces</option>
+                </select>
+		</div>
+	</div>
+<br><br>
+<div class="row">
+		<div class="col-md-12 form-group" style="text-align:center;">
+                <div class="form-group">
+                <label for="usr"><h2>Enter User Handle</h2></label>
+                <input type="text" class="form-control" id="usr"  style="width: 350px; margin-left:10px; display: inline-block;">
+                </div>
+		</div>
+	</div>
+<br><br>
+<div class="row">
+		<div class="col-md-12 form-group" style="text-align:center;">
+                <button id="submit-button" type="button" style="background-color: #25D366;font-size: 20px;color:black;" class="btn btn-success"><a href="{% url 'r6result' %}"><strong>Check Smurfness</strong></a></button>
+		</div>
+	</div>
+<br><br>
+
+{%if Message > 0 %}
+<div class="row">
+		
+				{%ifequal Message 1 %}
+          <div class="col-md-12" style="color: red; text-align:center;">
+          <h2>
+            User Not found. Please try again with a correct username
+          </h2>
+          </div>
+      {%endifequal%}
+      {%ifequal Message 2 %}
+          <div class="col-md-12" style="color: green; text-align:center;">
+          <h2>
+            User information succesfully added to database thanks for your input
+          </h2>
+          </div>
+      {%endifequal%}
+	
+	</div>
+  {%endif%}
+</div>
+      </body>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type = "text/javascript">
+ $("#submit-button").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/predicting/",
+        data: { 
+            username: $("#usr").val(), // < note use of 'this' here
+            website: $("#sel1").val() 
+        }
+    });
+});
+</script> {% endcomment %}
+</html>

@@ -53,6 +53,7 @@ class R6Final(models.Model):
     class Meta:
         managed = False
         db_table = 'r6final'
+    
 
 
 class Cffinal(models.Model):
