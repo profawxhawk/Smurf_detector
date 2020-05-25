@@ -76,6 +76,9 @@ class Cffinal(models.Model):
     fft = models.IntegerField()
     meetinthemiddle = models.IntegerField()
     intelligence = models.DecimalField(db_column='Intelligence', max_digits=11, decimal_places=9)  # Field name made lowercase.
+    smurf = models.BooleanField(db_column='Smurf')  # Field name made lowercase. This field type is a guess.
+    count_no_smurf = models.IntegerField(blank=True, null=True)
+    count_smurf = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

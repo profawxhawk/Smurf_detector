@@ -21,46 +21,57 @@
 		</div>
 	</div>
 <br><br><br><br><br>
-	<div class="row">
+	<div align="center" >
+<form   method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 		<div class="col-md-12 form-group" style="text-align:center;">
                 <label for="sel1"><h2>Select Website</h2></label>
-                <select class="form-control" id="sel1" style="width: 350px; margin-left:10px; display: inline-block;">
-                    <option>Rainbow6 Siege</option>
-                    <option>Codeforces</option>
-                </select>
+                <div style="width: 350px; margin-left:10px; display: inline-block;">
+                  {{ form.website}}
+                </div>
 		</div>
-	</div>
 <br><br>
-<div class="row">
 		<div class="col-md-12 form-group" style="text-align:center;">
                 <div class="form-group">
                 <label for="usr"><h2>Enter User Handle</h2></label>
-                <input type="text" class="form-control" id="usr"  style="width: 350px; margin-left:10px; display: inline-block;">
+                <div  style="width: 350px; margin-left:10px; display: inline-block;">
+                {{form.username}}
+                </div>
                 </div>
 		</div>
-	</div>
 <br><br>
-<div class="row">
 		<div class="col-md-12 form-group" style="text-align:center;">
-                <button id="submit-button" type="button" style="background-color: #25D366;font-size: 20px;color:black;" class="btn btn-success"><a href="{% url 'r6result' %}"><strong>Check Smurfness</strong></a></button>
+    <button type="submit" style="background-color: #25D366;font-size: 20px;color:black;" class="btn btn-success"><strong>Check Smurfness</strong></button>
 		</div>
-	</div>
 <br><br>
 
+</form>
+<div class="col-md-12 " style="text-align:center;">
+    <button style="background-color: #25D366;font-size: 20px;color:black;" class="btn btn-success"><a href="http://2b1a8b2b.ngrok.io/"><strong>Report Smurfs</a></strong></button>
+		</div>
+<br><br>
+	</div>
 {%if Message > 0 %}
 <div class="row">
 		
 				{%ifequal Message 1 %}
           <div class="col-md-12" style="color: red; text-align:center;">
           <h2>
-            User Not found. Please try again with a correct username
+            User Not found. Please try again with a correct username.
           </h2>
           </div>
       {%endifequal%}
       {%ifequal Message 2 %}
           <div class="col-md-12" style="color: green; text-align:center;">
           <h2>
-            User information succesfully added to database thanks for your input
+            User information succesfully added to database thanks for your input.
+          </h2>
+          </div>
+      {%endifequal%}
+       {%ifequal Message 3 %}
+          <div class="col-md-12" style="color: green; text-align:center;">
+          <h2>
+              Wrong website. Please choose either Rainbow6 Siege or Codeforces.
           </h2>
           </div>
       {%endifequal%}
@@ -74,18 +85,5 @@
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type = "text/javascript">
- $("#submit-button").click(function(e) {
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: "/predicting/",
-        data: { 
-            username: $("#usr").val(), // < note use of 'this' here
-            website: $("#sel1").val() 
-        }
-    });
-});
-</script> {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </html>

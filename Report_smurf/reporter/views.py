@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import rainbow_6form,cf_form
 from django.urls import reverse
-from .models import R6Final
+from .models import R6Final,Cffinal
 from .scrap import extract_data
+from .scrapcf import get_all_data
 import math
 # Create your views here.
 minMaxVal = {"Level":[18,564], "Best MMR Rating":[0,9007], "Rank":[0,22], "Avg Seasonal MMR":[1966,9007],
@@ -13,6 +14,7 @@ minMaxVal = {"Level":[18,564], "Best MMR Rating":[0,9007], "Rank":[0,22], "Avg S
 "Kills/match_casual":[0,3.77], "Time Played_ranked":[0,5169], "Wins_ranked":[0, 8962], "Losses_ranked":[0,7601],
 "Matches_ranked":[0,15724], "Deaths_ranked":[0,68454], "Kills_ranked":[13,77020], "Win%_ranked":[0,100],
 "KD_ranked": [0.07,124], "Kills/match_ranked":[0.24,21], "Kills/min_ranked":[0.02, 4.67] }
+
 def home(request):
     return render(request, 'reporter/Homepage.html')
 
@@ -38,7 +40,7 @@ def update_user(username,val):
 def logit(val):
     return val
 def convert_type(arr):
-    Rank_list={'NO_RANK':0,'COPPERIV':1,'COPERIV':2,'COPPERIII':3,'COPPERII':4,'COPPERI':5,'BRONZEIV':6,'BRONZEIII':7,'BRONZEII':8,'BRONZEI':9,'SILVERV':10,'SILVERIV':11,'SILVERIII':12,'SILVERII':13,'SILVERI':14,'GOLDIV':15,'GOLDIII':16,'GOLDII':17,'GOLDI':18,'PLATINUMIII':19,'PLATINUMII':20,'PLATINUMII':21,'DIMOND':22,'CHAMPION':23}
+    Rank_list={'NO_RANK':0,'COPPER V':1,'COPER IV':2,'COPPER III':3,'COPPER II':4,'COPPER I':5,'BRONZE IV':6,'BRONZE III':7,'BRONZE II':8,'BRONZE I':9,'SILVER V':10,'SILVER IV':11,'SILVER III':12,'SILVER II':13,'SILVER I':14,'GOLD IV':15,'GOLD III':16,'GOLD II':17,'GOLD I':18,'PLATINUM III':19,'PLATINUM II':20,'PLATINUM II':21,'DIMOND':22,'CHAMPION':23}
     arr[1]=logit(float(arr[1].replace(',','')))
     arr[2]=logit(float(arr[2].replace(',','')))
     arr[3]=Rank_list[arr[3]]
@@ -143,13 +145,13 @@ def add_user(request,username,val):
 
 def check_username_cf(username):
     
-    user=R6Final.objects.filter(username=username)
+    user=Cffinal.objects.filter(handle=username)
     if len(user)==0:
         return 0
     return 1
 
 def update_user_cf(username,val):
-    user=R6Final.objects.get(username=username)
+    user =Cffinal.objects.get(handle=username)
     if val==False:
         user.count_no_smurf+=1
     else:
@@ -159,14 +161,44 @@ def update_user_cf(username,val):
         user.smurf=False
     else:
         user.smurf=True
-    user.save()
+    # user.save()
 
 def add_user_cf(request,username,val):
-    data=extract_data(username)
+    data=get_all_data(username)
     if data==0:
         return data
     else:
-        
+        cf=Cffinal()
+        temp=Cffinal.objects.all().last()
+
+        cf.field1=temp.field1+1
+        cf.handle=username
+        cf.firstname=data[0]
+        cf.lastname=data[1]
+        cf.city=data[2]
+        cf.maxrank =data[3]
+        cf.maxrating =int(data[4])
+        cf.contribution = int(data[5])
+        cf.friendofcount = int(data[6])
+        cf.upvotes = float(data[7])
+        cf.ac_percentage = float(data[8])
+        cf.hashing =int(data[9])
+        cf.bitmasks = int(data[10])
+        cf.ternary_search = int(data[11])
+        cf.flows = int(data[12])
+        cf.string_suffix_structures = int(data[13])
+        cf.fft = int(data[14])
+        cf.meetinthemiddle =int(data[15])
+        cf.intelligence =float(data[16])
+        if val==False:
+            cf.smurf = False
+            cf.count_no_smurf = 1
+            cf.count_smurf = 0
+        else:
+            cf.smurf = True
+            cf.count_no_smurf = 0
+            cf.count_smurf = 1
+        cf.save()
         return 1
 
 

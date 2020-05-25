@@ -28,7 +28,7 @@
 	<div class="row">
 		<div class="col-md-12" style="background-color: #25D366; text-align:center;">
 			<h2>
-				Smurfinator
+				{{website}}
 			</h2>
 		</div>
 	</div>
@@ -41,9 +41,18 @@
 <br><br>
 <div class="row">
 		<div class="col-md-12" style="text-align:center;">
+      {% if score is not None %}
 			<div class="circle" style="display:inline-block; margin-right:50px;"><strong>Accuracy : <br>{{ score}}</strong></div>
-      <img src="/media/smurf1.jpg" alt="Smurfness plot">
       <div class="circle" style="display:inline-block"><strong>Smurfness : <br>{{prediction}}</strong></div>
+      {% endif %}
+      {%if group is not None %}
+			<div class="circle" style="display:inline-block;"><strong>User belongs to : <br>{{group}}</strong></div>
+      {% endif %}
+
+      {% autoescape off %}
+      {{ plot }}
+      {% endautoescape %}
+      
 		</div>
 	</div>
   <br><br>
@@ -76,20 +85,4 @@
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type = "text/javascript">
- $("#submit-button").click(function(e) {
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: "/predicting/",
-        data: { 
-            username: $("#usr").val(), // < note use of 'this' here
-            website: $("#sel1").val() 
-        },
-        success: function(data) {
-                alert(data)
-        },
-    });
-});
-</script>
 </html>
