@@ -33,6 +33,8 @@ minMaxVal = {"Level":[18,564], "Best MMR Rating":[0,9007], "Rank":[0,22], "Avg S
 
 def logit(val):
     return val
+    print(val)
+    
 def convert_type(arr):
     Rank_list={'NO_RANK':0,'COPPER V':1,'COPER IV':2,'COPPER III':3,'COPPER II':4,'COPPER I':5,'BRONZE IV':6,'BRONZE III':7,'BRONZE II':8,'BRONZE I':9,'SILVER V':10,'SILVER IV':11,'SILVER III':12,'SILVER II':13,'SILVER I':14,'GOLD IV':15,'GOLD III':16,'GOLD II':17,'GOLD I':18,'PLATINUM III':19,'PLATINUM II':20,'PLATINUM II':21,'DIMOND':22,'CHAMPION':23}
     arr[1]=logit(float(arr[1].replace(',','')))

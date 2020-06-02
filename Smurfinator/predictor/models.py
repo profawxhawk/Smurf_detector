@@ -47,6 +47,7 @@ class R6Final(models.Model):
     smurf = models.BooleanField(db_column='Smurf')  # Field name made lowercase. This field type is a guess.
     count_no_smurf = models.IntegerField(blank=True, null=True)
     count_smurf = models.IntegerField(blank=True, null=True)
+    
 
 
 
